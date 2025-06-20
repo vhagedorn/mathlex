@@ -3,15 +3,15 @@ from mathlex import parse, lex, pprint, to_string
 from tokens import OperatorToken, GroupToken, RegexToken, UnaryOperatorToken, UnaryPlacementType, LiteralToken, EOFToken
 
 if __name__ == "__main__":
-    # raw = input("> ")
-    # raw = "y'-exp(x)*(sin(theta)+4))/ (e^x - 3*sin(14*y*pi)) * i^2 - inf"
-    # raw = "4y'+3y+7x-67+5sin(15)-6x7162sin(5)12"
-    raw = "y''+2y'+y=0"
+    raw = input("> ")
     stream = StringIO(raw)
     parsed = parse(stream)
     lexed = lex(parsed)
-    pprint(lexed)           # formatted color output
+
+    print("-> ", end="")
     print(to_string(lexed)) # explicit plain text output
+    print("~> ", end="")
+    pprint(lexed)           # formatted color output
 
     def preprocess(T):
         has_eq = False
@@ -88,7 +88,12 @@ if __name__ == "__main__":
                         else:
                             print(t, end="")
                     case LiteralToken():
-                        print(f"sp.{t.name}", end="")
+                        n = t.name
+                        if len(n) == 1:
+                           n = n.upper()
+                        else:
+                            n = n.lower()
+                        print(f"sp.{n}", end="")
                     case RegexToken():
                         if i+1 in range(len(T)):
                             if isinstance(T[i+1], UnaryOperatorToken):
