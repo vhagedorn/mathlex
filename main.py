@@ -85,6 +85,8 @@ if __name__ == "__main__":
                     case OperatorToken():
                         if t.name == "=":
                             print("\nrhs = ", end="")
+                        elif t.name == "^":
+                            print("**", end="")
                         else:
                             print(t, end="")
                     case LiteralToken():
